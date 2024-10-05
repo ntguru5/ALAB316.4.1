@@ -53,9 +53,7 @@ document.getElementById('registration').addEventListener('submit', function (eve
     displaySuccess('Registration successful!');
 });
 
-
-console.log(document.getElementById('registration'))
-
+// Display error messages for Registration and Login
 function displayError(message) {
     console.log('Error display:', message);
     const errorDisplay = document.getElementById('errorDisplay');
@@ -63,6 +61,7 @@ function displayError(message) {
     errorDisplay.style.display = 'block';
 }
 
+// Display success messages for Registration and Login
 function displaySuccess(message) {
     const errorDisplay = document.getElementById('errorDisplay');
     errorDisplay.innerHTML = message;
@@ -70,13 +69,6 @@ function displaySuccess(message) {
     errorDisplay.style.color = 'green';
     errorDisplay.style.fontWeight = 'bold';
 }
-
-// Example: clearing the error display after successful submission
-// function clearErrorDisplay() {
-//     const errorDisplay = document.getElementById("errorDisplay");
-//     errorDisplay.innerHTML = ""; // Clear any messages
-//     errorDisplay.style.display = "none"; // Hide the display
-// }
 
 // Username validation
 function validateUsername(username) {
