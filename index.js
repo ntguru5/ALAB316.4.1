@@ -17,7 +17,6 @@ document.getElementById('registration').addEventListener('submit', function (eve
 
     // Username validation
     const usernameVal = username.value;
-    console.log(usernameVal);
     if (!validateUsername(usernameVal)){
         username.focus();
         return;
@@ -25,7 +24,6 @@ document.getElementById('registration').addEventListener('submit', function (eve
 
     // Email validation
     const emailVal = email.value;
-    console.log(emailVal);
     if (!validateEmail(emailVal)) {
         email.focus();
         return;
@@ -33,7 +31,6 @@ document.getElementById('registration').addEventListener('submit', function (eve
 
     // Password validation
     const passwordVal = password.value;
-    console.log(`password: ${passwordVal}`);
     if (!validatePassword(passwordVal, usernameVal)) {
         password.focus();
         return;
@@ -55,7 +52,6 @@ document.getElementById('registration').addEventListener('submit', function (eve
 
 // Display error messages for Registration and Login
 function displayError(message) {
-    console.log('Error display:', message);
     const errorDisplay = document.getElementById('errorDisplay');
     errorDisplay.textContent = message;
     errorDisplay.style.display = 'block';
@@ -72,7 +68,6 @@ function displaySuccess(message) {
 
 // Username validation
 function validateUsername(username) {
-    console.log('username value', username);
     try {
         if (username === "") {
             displayError("Username cannot be blank.");
@@ -186,8 +181,6 @@ const keepLoggedIn = loginForm.querySelector('input[name="persist"]');
 
 loginForm.addEventListener('submit', function (event) {
     event.preventDefault(); // Prevent form submission for validation
-    console.log('Username:', loginUsername.value);
-    console.log('Password:', loginPassword.value);
 
     // Clear previous errors
     errorDisplay.style.display = 'none';
