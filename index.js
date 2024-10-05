@@ -42,24 +42,30 @@ document.getElementById('registration').addEventListener('submit', function (eve
         return;
     }
 
+    // If all validations pass, store user data in localStorage
+    storeUser(usernameVal, emailVal, passwordVal);
+
+    // Clear the form and display success message
+    event.target.reset();
+    displaySuccess('Registration successful!');
 });
 
+
 console.log(document.getElementById('registration'))
-// Display error message and return focus to the input
+
 function displayError(message) {
     console.log('Error display:', message);
     const errorDisplay = document.getElementById('errorDisplay');
     errorDisplay.textContent = message;
     errorDisplay.style.display = 'block';
-    // input.focus(); //focus on the field that caused the error
 }
 
-// function displaySuccess(message) {
-//     const errorDisplay = document.getElementById('errorDisplay');
-//     errorDisplay.innerHTML = message;
-//     errorDisplay.style.display = 'block';
-//     errorDisplay.style.color = 'green';
-// }
+function displaySuccess(message) {
+    const errorDisplay = document.getElementById('errorDisplay');
+    errorDisplay.innerHTML = message;
+    errorDisplay.style.display = 'block';
+    errorDisplay.style.color = 'green';
+}
 
 // function clearErrorDisplay() {
 //     console.log('clear error display')
@@ -157,4 +163,12 @@ function validatePassword(password, username) {
         displayError("An unexpected error occurred during password validation.");
         return false;
     }
+}
+
+// Store user data in localStorage
+function storeUser(username, email, password) {
+    const users = JSON.parse(localStorage.getItem('users')) || {};
+    users[username.toLowerCase()] = { email: email.toLowerCase(), password: password };
+    localStorage.setItem('users', JSON.stringify(users));
+    console.log(users);
 }
