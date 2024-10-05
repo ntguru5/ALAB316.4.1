@@ -12,7 +12,6 @@ document.getElementById('registration').addEventListener('submit', function (eve
     errorDisplay.style.display = 'none';
     errorDisplay.innerHTML = '';
 
-
     // Username validation
     const usernameVal = username.value;
     console.log(usernameVal);
@@ -20,6 +19,7 @@ document.getElementById('registration').addEventListener('submit', function (eve
         username.focus();
         return;
     }
+
     // Email validation
     const emailVal = email.value;
     console.log(emailVal);
@@ -28,6 +28,13 @@ document.getElementById('registration').addEventListener('submit', function (eve
         return;
     }
 
+    // Password validation
+    const passwordVal = password.value;
+    console.log(`password: ${passwordVal}`);
+    if (!validatePassword(passwordVal, usernameVal)) {
+        password.focus();
+        return;
+    }
 
 
 });
@@ -104,6 +111,45 @@ function validateEmail(email) {
         // Handle any unexpected errors
         console.error('Validation error:', error);
         displayError("An unexpected error occurred during email validation.");
+        return false;
+    }
+}
+
+// Password validation
+function validatePassword(password, username) {
+    try {
+        if (password.length < 12) {
+            displayError("Passwords must be at least 12 characters long.");
+            return false;
+        }
+        if (!/[A-Z]/.test(password)) {
+            displayError("Passwords must contain at least one uppercase letter.");
+            return false;
+        }
+        if (!/[a-z]/.test(password)) {
+            displayError("Passwords must contain at least one lowercase letter.");
+            return false;
+        }
+        if (!/[0-9]/.test(password)) {
+            displayError("Passwords must contain at least one number.");
+            return false;
+        }
+        if (!/[!@#$%^&*]/.test(password)) {
+            displayError("Passwords must contain at least one special character.");
+            return false;
+        }
+        if (password.toLowerCase().includes("password")) {
+            displayError("Passwords cannot contain the word 'password'.");
+            return false;
+        }
+        if (password.toLowerCase().includes(username.toLowerCase())) {
+            displayError("Passwords cannot contain the username.");
+            return false;
+        }
+        return true;
+    } catch (error) {
+        console.error('Password validation error:', error);
+        displayError("An unexpected error occurred during password validation.");
         return false;
     }
 }
