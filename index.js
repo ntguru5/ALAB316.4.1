@@ -51,22 +51,33 @@ function validateUsername(username) {
 // The username must be at least four characters long.
 // The username must contain at least two unique characters.
 // The username cannot contain any special characters or whitespace.
-    if (username.trim() === '') {
-        displayError('Username cannot be blank');
+try {
+    if (username === "") {
+        displayError("Username cannot be blank.");
         return false;
     }
     if (username.length < 4) {
-        displayError('Username must be at least 4 characters long');
+        displayError("Username must be at least four characters long.");
         return false;
     }
     const uniqueChars = new Set(username);
     if (uniqueChars.size < 2) {
-        displayError('Username must contain at least two unique characters')
+        displayError("Username must contain at least two unique characters.");
+        return false;
     }
     if (/[^a-zA-Z0-9]/.test(username)) {
-        displayError('Username cannot contain special characters or whitespace.', document.getElementsByName('username')[0]);
+        displayError("Username cannot contain special characters or whitespace.");
+        return false;
+    }
+    if (userExists(username)) {
+        displayError("That username is already taken.");
         return false;
     }
     return true;
-
+} catch (error) {
+    // Handle unexpected errors
+    console.error('Validation error:', error);
+    displayError('An unexpected error occurred during validation.');
+    return false;
+}
 }
