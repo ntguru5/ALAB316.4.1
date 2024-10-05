@@ -36,6 +36,11 @@ document.getElementById('registration').addEventListener('submit', function (eve
         return;
     }
 
+    // Terms validation
+    if (!terms.checked) {
+        displayError('You must agree to the Terms of Use.');
+        return;
+    }
 
 });
 
