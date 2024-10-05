@@ -48,7 +48,7 @@ document.getElementById('registration').addEventListener('submit', function (eve
     // If all validations pass, store user data in localStorage
     storeUser(usernameVal, emailVal, passwordVal);
 
-    // Clear the form and display success message
+    // Clear the form and display successful registration message
     event.target.reset();
     displaySuccess('Registration successful!');
 });
@@ -211,6 +211,11 @@ loginForm.addEventListener('submit', function (event) {
         loginPassword.focus();
         return;
     }
+
+    // If all validations pass, clear the form fields
+    loginUsername.value = '';
+    loginPassword.value = '';
+
     // Handle successful login
     if (keepLoggedIn.checked) {
         displaySuccess("Login successful! (Keep me logged in selected)");
