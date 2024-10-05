@@ -65,10 +65,14 @@ function displaySuccess(message) {
     errorDisplay.innerHTML = message;
     errorDisplay.style.display = 'block';
     errorDisplay.style.color = 'green';
+    errorDisplay.style.fontWeight = 'bold';
 }
 
+// Example: clearing the error display after successful submission
 // function clearErrorDisplay() {
-//     console.log('clear error display')
+//     const errorDisplay = document.getElementById("errorDisplay");
+//     errorDisplay.innerHTML = ""; // Clear any messages
+//     errorDisplay.style.display = "none"; // Hide the display
 // }
 
 // Username validation
@@ -92,10 +96,12 @@ function validateUsername(username) {
             displayError("Username cannot contain special characters or whitespace.");
             return false;
         }
-        // if (userExists(username)) {
-        //     displayError("That username is already taken.");
-        //     return false;
-        // }
+        // check if Username already exists
+        const users = JSON.parse(localStorage.getItem('users')) || {};
+        if (users[username.toLowerCase()]) {
+            displayError("That username is already taken.");
+            return false;
+        }
         return true;
     } catch (error) {
         // Handle unexpected errors
@@ -172,3 +178,16 @@ function storeUser(username, email, password) {
     localStorage.setItem('users', JSON.stringify(users));
     console.log(users);
 }
+
+// Login form validation
+const loginForm = document.getElementById('login');
+
+// Get the username and password fields
+const loginUsername = loginForm.querySelector('input[name="username"]');
+const loginPassword = loginForm.querySelector('input[name="password"]');
+
+loginForm.addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form submission for validation
+    console.log('Username:', loginUsername.value);
+    console.log('Password:', loginPassword.value);
+});
