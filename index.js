@@ -201,6 +201,11 @@ loginForm.addEventListener('submit', function (event) {
         loginUsername.focus();
         return;
     }
+    // Password validation
+    if (!validateLoginPassword(loginUsername.value, loginPassword.value)) {
+        loginPassword.focus();
+        return;
+    }
 });
 
 // Display error messages
@@ -216,10 +221,27 @@ function validateLoginUsername(username) {
         displayError("Username cannot be blank.");
         return false;
     }
-
+    // Check if user already exists in localStorage
     const users = JSON.parse(localStorage.getItem('users')) || {};
     if (!users[username.toLowerCase()]) {
         displayError("Username does not exist.");
+        return false;
+    }
+
+    return true;
+}
+
+// Validate login password
+function validateLoginPassword(username, password) {
+    if (password === "") {
+        displayError("Password cannot be blank.");
+        return false;
+    }
+    // Check if user password is correct in localStorage
+    const users = JSON.parse(localStorage.getItem('users')) || {};
+    const storedUser = users[username.toLowerCase()];
+    if (!storedUser || storedUser.password !== password) {
+        displayError("Incorrect password.");
         return false;
     }
 
