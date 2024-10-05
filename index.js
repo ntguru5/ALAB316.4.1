@@ -1,3 +1,6 @@
+////////////////////////////////////////////////////
+// Registration form validation
+////////////////////////////////////////////////////
 const username = document.getElementById('username');
 const email = document.getElementById('email');
 const password = document.getElementById('password');
@@ -179,13 +182,15 @@ function storeUser(username, email, password) {
     console.log(users);
 }
 
+////////////////////////////////////////////////////
 // Login form validation
+////////////////////////////////////////////////////
 const loginForm = document.getElementById('login');
 
 // Get the username and password fields
 const loginUsername = loginForm.querySelector('input[name="username"]');
 const loginPassword = loginForm.querySelector('input[name="password"]');
-const keepLoggedIn = loginForm.querySelector('input[name="persist"]').checked;
+const keepLoggedIn = loginForm.querySelector('input[name="persist"]');
 
 loginForm.addEventListener('submit', function (event) {
     event.preventDefault(); // Prevent form submission for validation
@@ -206,14 +211,13 @@ loginForm.addEventListener('submit', function (event) {
         loginPassword.focus();
         return;
     }
+    // Handle successful login
+    if (keepLoggedIn.checked) {
+        displaySuccess("Login successful! (Keep me logged in selected)");
+    } else {
+        displaySuccess("Login successful! (Keep me logged in NOT selected)");
+    }
 });
-
-// Display error messages
-function displayError(message) {
-    const errorDisplay = document.getElementById('errorDisplay');
-    errorDisplay.textContent = message;
-    errorDisplay.style.display = 'block';
-}
 
 // Validate login username
 function validateLoginUsername(username) {
@@ -227,7 +231,6 @@ function validateLoginUsername(username) {
         displayError("Username does not exist.");
         return false;
     }
-
     return true;
 }
 
@@ -244,6 +247,5 @@ function validateLoginPassword(username, password) {
         displayError("Incorrect password.");
         return false;
     }
-
     return true;
 }
