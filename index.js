@@ -185,9 +185,43 @@ const loginForm = document.getElementById('login');
 // Get the username and password fields
 const loginUsername = loginForm.querySelector('input[name="username"]');
 const loginPassword = loginForm.querySelector('input[name="password"]');
+const keepLoggedIn = loginForm.querySelector('input[name="persist"]').checked;
 
-loginForm.addEventListener('submit', function(event) {
+loginForm.addEventListener('submit', function (event) {
     event.preventDefault(); // Prevent form submission for validation
     console.log('Username:', loginUsername.value);
     console.log('Password:', loginPassword.value);
+
+    // Clear previous errors
+    errorDisplay.style.display = 'none';
+    errorDisplay.innerHTML = '';
+
+    // Username validation
+    if (!validateLoginUsername(loginUsername.value)) {
+        loginUsername.focus();
+        return;
+    }
 });
+
+// Display error messages
+function displayError(message) {
+    const errorDisplay = document.getElementById('errorDisplay');
+    errorDisplay.textContent = message;
+    errorDisplay.style.display = 'block';
+}
+
+// Validate login username
+function validateLoginUsername(username) {
+    if (username === "") {
+        displayError("Username cannot be blank.");
+        return false;
+    }
+
+    const users = JSON.parse(localStorage.getItem('users')) || {};
+    if (!users[username.toLowerCase()]) {
+        displayError("Username does not exist.");
+        return false;
+    }
+
+    return true;
+}
